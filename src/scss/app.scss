@@ -1,0 +1,17 @@
+html,body,h1,h2,h3,h4,h5,ul,li,p,i,strong,b,div,span,section,article,details,figcaption,figure,nav,a{padding:0;margin:0;font-weight:normal;font-style:normal;list-style:none;}
+a,button,input{outline: none;border-radius: 0;-webkit-appearance: none;}
+body,html{tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color:rgba(0,0,0,0);}
+html{
+  margin: 0;
+  padding: 0;
+}
+body{
+  margin: 0 auto;
+  font-size: 0.28rem;
+  font-family: "Microsoft YaHei",Helvetica,"Droid Sans",Arial,sans-serif;
+  max-width: 7.68rem;
+}
+img{
+  max-width: 100%;
+  vertical-align: middle;
+}
