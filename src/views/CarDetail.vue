@@ -1,7 +1,7 @@
 <template>
     <div>
         <p>carDetail</p>
-        <popup :show.sync="show">
+        <popup :show="show" @closePopup="hidePopup">
             <p slot="header">
                 header
             </p>
@@ -23,11 +23,12 @@
             };
         },
         methods:{
-            hidePopup(){
-                this.show = false;
-            },
             showPopup(){
                 this.show = true;
+            },
+            hidePopup(id){
+                this.show = false;
+                console.log(id);
             }
         }
     }

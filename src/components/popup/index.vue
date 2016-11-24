@@ -19,14 +19,8 @@
             }
         },
         methods:{
-            hidePopup(){
-                this.show = false;
-            },
-            showPopup(){
-                this.show = true;
-            },
             closePopup(){
-                this.show = false;
+                this.$emit('closePopup',333);
             }
         }
     }
