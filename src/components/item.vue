@@ -1,6 +1,6 @@
 <template>
     <ul>
-        <li v-for="item in listData" :data-id="item.carId" @click="goDetail">
+        <li v-for="item in listData" @click="goDetail(item.carId)">
            <p class="pic-wrap">
                <img :src="item.imagePic" :alt="item.carName">
            </p>
@@ -20,10 +20,9 @@
         name:'carItem',
         props:['listData'],
         methods:{
-            goDetail(e){
-                
-               let carId = e.currentTarget.dataset.id;
-               this.$router.push({path:`/car/`+carId});
+            goDetail(id){
+                //let carId = e.currentTarget.dataset.id;
+               this.$router.push({path:`/car/`+id});
             }
         }
     };
