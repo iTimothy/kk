@@ -1,0 +1,44 @@
+.page-hide-enter-active{
+    animation: page-hide-move-in .5s ease-out;
+}
+.page-hide-leave-active{
+    animation: page-hide-move-out .5s ease-out;
+}
+@keyframes page-hide-move-in {
+    from{
+        transform: translateX(-120%);
+    }
+    to{
+        transform: translateX(0);
+    }
+}
+@keyframes page-hide-move-out {
+    from{
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(-120%);
+    }
+}
+.page-show-enter-active{
+    animation: page-show-move-in .5s ease-out;
+}
+.page-show-leave-active{
+    animation: page-show-move-out .5s ease-out;
+}
+@keyframes page-show-move-in {
+    from{
+        transform: translateX(120%);
+    }
+    to{
+        transform: translateX(0);
+    }
+}
+@keyframes page-show-move-out {
+    from{
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(120%);
+    }
+}

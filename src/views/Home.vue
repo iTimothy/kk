@@ -1,15 +1,16 @@
 <template>
-    <div>
-        <swipe class="my-swipe">
-            <swipe-item class="slide-item"><img src="http://m.kuaikuaizuche.com/resources/upload/carCategoryImg/201508/cd1b914a447d4d389474533c84b58ba1.jpg" alt=""></swipe-item>
-            <swipe-item class="slide-item"><img src="http://m.kuaikuaizuche.com/resources/upload/carCategoryImg/201508/a436d57be1834c87aa8db162ccd7bbc2.jpg" alt=""></swipe-item>
-            <swipe-item class="slide-item"><img src="http://m.kuaikuaizuche.com/resources/upload/carCategoryImg/201508/0db3e273971540318c31ed5ef91640df.jpg" alt=""></swipe-item>
-        </swipe>
-        <car-item :list-data="list" /></car-item>
-    </div>
+    <transition name="page-hide" keep-alive>
+        <div>
+            <swipe class="my-swipe">
+                <swipe-item class="slide-item" v-for="item in adverImgList"  @click="adverFn(item.externalUrl)"><img :src="item.url" alt=""></swipe-item>
+            </swipe>
+            <car-item :list-data="list" /></car-item>
+        </div>
+    </transition>
 </template>
 <script>
     import carItem from '../components/item';
+    import Bus from '../bus';
     import { Swipe, SwipeItem } from 'vue-swipe';
     require('vue-swipe/dist/vue-swipe.css');
     export default {
@@ -25,12 +26,13 @@
                 list:[],
                 scrollLock:false,
                 page:1,
-                pageSize:10
+                pageSize:10,
+                adverImgList:[]
             };
         },
         methods:{
             scroll(){
-               if (window.pageYOffset+window.innerHeight >= document.body.offsetHeight-250){
+               if (window.pageYOffset+window.innerHeight >= document.body.offsetHeight-280){
                    if(this.scrollLock){
                        return false;
                    }
@@ -62,16 +64,42 @@
                     },err=>{
                         cb && cb();
                     })
+            },
+            getAdver(){
+                this.$http.get(`/Kkzc/carwapapi/getAdvertInfo.do?areaCode=bfd0a62b821841ab9877486cbfcaba72`)
+                .then(response=>{
+                    let res = response.body;
+                    if(res.code == 200){
+                        this.adverImgList = res.data.imgUrls;
+                    }
+                })
+                .catch(err=>{
+
+                });
+            },
+            adverFn(url){
+                console.log(url);
             }
         },
         created(){
-             this.getCarList();
+            this.getCarList();
             window.addEventListener("scroll", this.scroll, false);
-
+            this.getAdver();
+            this.adverImgList = [
+                '/resources/upload/carCategoryImg/201508/b8b064f1e8b0458196c6eeca260d6d78.jpg',
+                '/resources/upload/carImg1/20160726/200e48c2d4c44c88904bf5b386f59db0/1469523825736.jpg',
+                '/resources/upload/carImg/adb8034b4e764cc7a1367bb0253a1352/201504/1428051598863.jpg'
+            ];
         },
-        ready(){
-
+        beforeRouteEnter(to,from,next){
+            next(vm=>{
+                Bus.$emit('showNav');
+            })
+        },
+        beforeRouteLeave(to,from,next){
+            next();
         }
     }
 </script>
-<style lang="scss" src="../scss/home.scss" scoped></style>
+<style lang="scss" src="../scss/swiper.scss" scoped></style>
+<style lang="scss" src="../scss/page-animate.scss"></style>

@@ -2,7 +2,7 @@
     <ul>
         <li v-for="item in listData" @click="goDetail(item.carId)">
            <p class="pic-wrap">
-               <img :src="item.imagePic" :alt="item.carName">
+               <img :src="item.imagePic ? item.imagePic : imgNull" :alt="item.carName" @error="imgError($event)">
            </p>
            <div class="detail">
                <p class="car-name"><strong>{{item.carName}}</strong><i>{{item.money}}/天</i></p>
@@ -16,14 +16,22 @@
     </ul>
 </template>
 <script>
+    import imgNull from '../assets/img/empty.jpg'
     export default {
         name:'carItem',
         props:['listData'],
+        data(){
+            return {
+                imgNull:imgNull
+            };
+        },
         methods:{
             goDetail(id){
-                //let carId = e.currentTarget.dataset.id;
                this.$router.push({path:`/car/`+id});
-            }
+           },
+           imgError(e){
+              e.target.src = this.imgNull;
+           }
         }
     };
 </script>

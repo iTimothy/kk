@@ -4,8 +4,80 @@
     left: 0;
     display: flex;
     width: 100%;
+    background-color: #fff;
+    font-size: .24rem;
+    padding-top: .1rem;
+    &:before{
+        position: absolute;
+        content:'';
+        display: block;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 1px;
+        background-color: #ddd;
+        transform: scaleY(.5);
+    }
     .nav-item{
         flex:1;
         text-align: center;
+    }
+    a{
+        color: #000;
+        text-decoration: none;
+        p{
+            text-align: center;
+        }
+        i{
+            display: inline-block;
+            width: .5rem;
+            height: .5rem;
+            background-image: url("../assets/img/nav-sprite.png");
+            background-position: 0 0;
+            background-size: 400%;
+        }
+    }
+    .nav-active{
+        color:#008fff;
+    }
+    .index{
+        i{
+            background-position: 0 0;
+        }
+        &.nav-active{
+            i{
+                background-position: 0 100%;
+            }
+        }
+    }
+    .search{
+        i{
+            background-position: -.5rem 0;
+        }
+        &.nav-active{
+            i{
+                background-position: -.5rem 100%;
+            }
+        }
+    }
+    .journey{
+        i{
+            background-position: -1rem 0;
+        }
+        &.nav-active{
+            i{
+                background-position: -1rem 100%;
+            }
+        }
+    }
+    .my{
+        i{
+            background-position: 100% 0;
+        }
+        &.nav-active{
+            i{
+                background-position: 100% 100%;
+            }
+        }
     }
 }

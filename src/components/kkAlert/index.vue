@@ -2,7 +2,7 @@
 <template>
     <div class="popup-wrap" v-if="show">
         <transition name="fade" @enter="enter" appear>
-            <div class="popup-shade" @click="shadeClosePopup"></div>
+            <div class="popup-shade" @click="shadeCloseAlert"></div>
         </transition>
         <div class="popup-contain">
             <transition name="scale" appear>
@@ -23,7 +23,7 @@
 </template>
 <script>
     export default{
-        name:'popup',
+        name:'kkAlert',
         props:{
             show: {
                 type: Boolean,
@@ -39,18 +39,15 @@
             }
         },
         methods:{
-            closePopup(){
-                this.$emit('closePopup');
-            },
-            shadeClosePopup(){
+            shadeCloseAlert(){
                 if(this.shadeClose){
-                    this.$emit('closePopup');
+                    this.$emit('closeAlert');
                 }
             },
             enter(){
                 if(this.timeout != 0){
                     setTimeout(function () {
-                        this.closePopup();
+                        this.closeAlert();
                     }.bind(this), this.timeout);
                 }
             }
