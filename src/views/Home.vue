@@ -1,6 +1,7 @@
 <template>
     <transition name="page-hide" keep-alive>
         <div>
+            <kk-loading :showLoading="showLoading"/>
             <swipe class="my-swipe">
                 <swipe-item class="slide-item" v-for="item in adverImgList"  @click="adverFn(item.externalUrl)"><img :src="item.url" alt=""></swipe-item>
             </swipe>
@@ -10,6 +11,7 @@
 </template>
 <script>
     import carItem from '../components/item';
+    import kkLoading from '../components/kkLoading/index';
     import Bus from '../bus';
     import { Swipe, SwipeItem } from 'vue-swipe';
     require('vue-swipe/dist/vue-swipe.css');
@@ -18,7 +20,8 @@
         components:{
             carItem,
             Swipe,
-            SwipeItem
+            SwipeItem,
+            kkLoading
         },
         data(){
             return{
@@ -27,7 +30,8 @@
                 scrollLock:false,
                 page:1,
                 pageSize:10,
-                adverImgList:[]
+                advertImgList:[],
+                showLoading:true
             };
         },
         methods:{
@@ -65,31 +69,34 @@
                         cb && cb();
                     })
             },
-            getAdver(){
+            getAdvert(){
                 this.$http.get(`/Kkzc/carwapapi/getAdvertInfo.do?areaCode=bfd0a62b821841ab9877486cbfcaba72`)
                 .then(response=>{
                     let res = response.body;
                     if(res.code == 200){
-                        this.adverImgList = res.data.imgUrls;
+                        this.advertImgList = res.data.imgUrls;
                     }
                 })
                 .catch(err=>{
 
                 });
             },
-            adverFn(url){
+            advertFn(url){
                 console.log(url);
             }
         },
+        mounted(){
+            this.getCarList(()=>{
+                this.showLoading = false;
+            });
+            this.getAdvert();
+            //this.$store.commit('INCREMENT_COUNT');
+            this.$store.dispatch('incrementAction');
+            console.log(this.$store.state.count);
+            console.log(JSON.stringify(this.$store.getters.doneTodo[0]));
+        },
         created(){
-            this.getCarList();
             window.addEventListener("scroll", this.scroll, false);
-            this.getAdver();
-            this.adverImgList = [
-                '/resources/upload/carCategoryImg/201508/b8b064f1e8b0458196c6eeca260d6d78.jpg',
-                '/resources/upload/carImg1/20160726/200e48c2d4c44c88904bf5b386f59db0/1469523825736.jpg',
-                '/resources/upload/carImg/adb8034b4e764cc7a1367bb0253a1352/201504/1428051598863.jpg'
-            ];
         },
         beforeRouteEnter(to,from,next){
             next(vm=>{

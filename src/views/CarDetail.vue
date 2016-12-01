@@ -5,6 +5,7 @@
 <template>
     <transition name="page-show" keep-alive>
         <div id="carDetail">
+            <kk-loading :showLoading="true" type="full" oneLine="no"/>
             <back :showBackNav="true" :backNavTitle="backNavTitle" :backNavFix="true"/>
             <!-- <kk-alert :show="show" @closeAlert="closeAlert" :shadeClose="true">
                 <p slot="content">
@@ -26,6 +27,7 @@
     import Bus from '../bus.js';
     import kkAlert from '../components/kkAlert/index';
     import Back from '../components/back';
+    import kkLoading from '../components/kkLoading/index';
     import { Swipe, SwipeItem } from 'vue-swipe';
 
     export default {
@@ -34,7 +36,8 @@
             kkAlert,
             Swipe,
             SwipeItem,
-            Back
+            Back,
+            kkLoading
         },
         data(){
             return{

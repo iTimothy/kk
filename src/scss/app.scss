@@ -1,6 +1,6 @@
 html,body,h1,h2,h3,h4,h5,ul,li,p,i,strong,b,div,span,section,article,details,figcaption,figure,nav,a{padding:0;margin:0;font-weight:normal;font-style:normal;list-style:none;}
 a,button,input{outline: none;border-radius: 0;-webkit-appearance: none;}
-body,html{tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color:rgba(0,0,0,0);}
+body,html{tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color:rgba(0,0,0,0);min-height: 100%;}
 html{
   margin: 0;
   padding: 0;
