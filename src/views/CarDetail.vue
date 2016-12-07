@@ -7,15 +7,15 @@
         <div id="carDetail">
             <kk-loading :showLoading="true" type="full" oneLine="no"/>
             <back :showBackNav="true" :backNavTitle="backNavTitle" :backNavFix="true"/>
-            <!-- <kk-alert :show="show" @closeAlert="closeAlert" :shadeClose="true">
+            <kk-notification :show="show" @closeNotification="closeNotification" :shadeClose="true" notifyType="alert">
                 <p slot="content">
                     content
                 </p>
                 <div slot="footer">
-                    <button type="button" name="button" class="btn" @click="closeAlert">close</button>
+                    <button type="button" name="button" class="btn" @click="closeNotification">close</button>
                 </div>
-            </kk-alert>
-            <button type="button" name="button" @click="showAlert">button</button> -->
+            </kk-notification>
+            <button type="button" name="button" @click="showNotification">button</button>
             <swipe class="my-swipe">
                 <swipe-item class="slide-item" v-for="item in carImgList"><img :src="item.imgPath"></swipe-item>
             </swipe>
@@ -24,8 +24,8 @@
 </template>
 <script>
 
-    import Bus from '../bus.js';
-    import kkAlert from '../components/kkAlert/index';
+    // import Bus from '../bus.js';
+    import kkNotification from '../components/kkNotification/index';
     import Back from '../components/back';
     import kkLoading from '../components/kkLoading/index';
     import { Swipe, SwipeItem } from 'vue-swipe';
@@ -33,7 +33,7 @@
     export default {
         name:'carDetail',
         components:{
-            kkAlert,
+            kkNotification,
             Swipe,
             SwipeItem,
             Back,
@@ -47,11 +47,16 @@
             };
         },
         methods:{
-            showAlert(){
+            showNotification(){
                 this.show = true;
+                // this.$store.commit('OPEN_KKALERT');
+                // this.show = this.$store.getters.getKkAlertState;
+                // console.log(this.$store.state.kkAlert.kkAlertState);
             },
-            closeAlert(){
+            closeNotification(){
                 this.show = false;
+                // this.$store.commit('CLOSE_KKALERT')
+                // this.show = this.$store.getters.getKkAlertState
             },
             getCarImg(){
                 this.$http.post('/Kkzc/carwapapi/carDetail.do',{
@@ -70,7 +75,11 @@
         },
         created(){
             this.getCarImg();
-            Bus.$emit('hideNav',1);
+
+        },
+        mounted(){
+            this.$store.dispatch('hideNav');
+            console.log(this.$store.getters.getNavState);
         }
     }
 </script>

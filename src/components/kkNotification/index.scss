@@ -1,3 +1,7 @@
+.notification-ani-leave-active {
+    transition: opacity .3s ease;
+    opacity: 0;
+}
 .popup-wrap{
     position: relative;
     z-index: 1000000;
@@ -26,6 +30,7 @@
         vertical-align: middle;
     }
     .popup-content{
+        font-size:.3rem;
         display: block;
         margin: 0 auto;
         width: 78%;
@@ -37,6 +42,21 @@
         background-clip: padding-box;
         transform-style: preserve-3d;
         pointer-events: auto;
+    }
+    button{
+        position: relative;
+        color: #0068b7;
+        background-color: #fff;
+        padding: 0;
+        font-size: .3rem;
+        &:before{
+            display: block;
+            content: "";
+            height: 1px;
+            transform: scaleY(.5);
+            background-color: #243657;
+            width: 100%;
+        }
     }
     .footer-default{
         padding-top: .3rem;

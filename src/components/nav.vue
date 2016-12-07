@@ -12,4 +12,4 @@
         props:['show']
     }
 </script>
-<style lang="scss" scope src="../scss/C-nav.scss" scoped></style>
+<style lang="scss" src="../scss/C-nav.scss" scoped></style>

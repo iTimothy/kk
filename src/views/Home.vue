@@ -12,9 +12,7 @@
 <script>
     import carItem from '../components/item';
     import kkLoading from '../components/kkLoading/index';
-    import Bus from '../bus';
     import { Swipe, SwipeItem } from 'vue-swipe';
-    require('vue-swipe/dist/vue-swipe.css');
     export default {
         name:'Home',
         components:{
@@ -72,13 +70,15 @@
             getAdvert(){
                 this.$http.get(`/Kkzc/carwapapi/getAdvertInfo.do?areaCode=bfd0a62b821841ab9877486cbfcaba72`)
                 .then(response=>{
-                    let res = response.body;
+                    return response.body;
+                })
+                .then(res=>{
                     if(res.code == 200){
                         this.advertImgList = res.data.imgUrls;
                     }
                 })
                 .catch(err=>{
-
+                    console.log(err);
                 });
             },
             advertFn(url){
@@ -91,16 +91,16 @@
             });
             this.getAdvert();
             //this.$store.commit('INCREMENT_COUNT');
-            this.$store.dispatch('incrementAction');
+            this.$store.dispatch('INCREMENT_COUNT');
             console.log(this.$store.state.count);
             console.log(JSON.stringify(this.$store.getters.doneTodo[0]));
         },
         created(){
             window.addEventListener("scroll", this.scroll, false);
+            this.$store.dispatch('showNav');
         },
         beforeRouteEnter(to,from,next){
             next(vm=>{
-                Bus.$emit('showNav');
             })
         },
         beforeRouteLeave(to,from,next){
@@ -110,3 +110,4 @@
 </script>
 <style lang="scss" src="../scss/swiper.scss" scoped></style>
 <style lang="scss" src="../scss/page-animate.scss"></style>
+<style lang="scss" src="vue-swipe/dist/vue-swipe.css"></style>

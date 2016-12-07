@@ -1,7 +1,7 @@
 import {INCREMENT_COUNT} from './events'
 
 const actions = {
-    incrementAction({commit}){
+    [INCREMENT_COUNT]({commit}){
         commit(INCREMENT_COUNT);
     }
 }
