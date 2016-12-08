@@ -5,16 +5,14 @@
 <template>
     <transition name="page-show" keep-alive>
         <div id="carDetail">
-            <kk-loading :showLoading="true" type="full" oneLine="no"/>
+            <kk-loading :showLoading="false" type="full" oneLine="no"/>
             <back :showBackNav="true" :backNavTitle="backNavTitle" :backNavFix="true"/>
-            <kk-notification :show="show" @closeNotification="closeNotification" :shadeClose="true" notifyType="alert">
-                <p slot="content">
-                    content
-                </p>
-                <div slot="footer">
-                    <button type="button" name="button" class="btn" @click="closeNotification">close</button>
-                </div>
-            </kk-notification>
+            <!-- <kk-notification :show="show" @closeNotification="closeNotification" :shadeClose="true" notifyType="alert">
+                <p slot="header">header</p>
+                <p slot="content">content</p>
+                <button type="button" name="button" class="btn" @click="closeNotification" slot="footer">close</button>
+                <button type="button" name="button" class="btn" @click="closeNotification" slot="footer">cancel</button>
+            </kk-notification> -->
             <button type="button" name="button" @click="showNotification">button</button>
             <swipe class="my-swipe">
                 <swipe-item class="slide-item" v-for="item in carImgList"><img :src="item.imgPath"></swipe-item>
@@ -25,10 +23,11 @@
 <script>
 
     // import Bus from '../bus.js';
-    import kkNotification from '../components/kkNotification/index';
+    import kkNotification from '../components/kkNotification/index.vue';
     import Back from '../components/back';
     import kkLoading from '../components/kkLoading/index';
     import { Swipe, SwipeItem } from 'vue-swipe';
+    import Notify from '../components/kkNotification/index';
 
     export default {
         name:'carDetail',
@@ -48,10 +47,22 @@
         },
         methods:{
             showNotification(){
-                this.show = true;
+                //this.show = true;
                 // this.$store.commit('OPEN_KKALERT');
                 // this.show = this.$store.getters.getKkAlertState;
                 // console.log(this.$store.state.kkAlert.kkAlertState);
+                Notify.alert({
+                    msg:'hhhh',
+                    okButtonText:'确定',
+                    okFn:function(){
+                        Notify.alert({
+                            msg:'fff',
+                            okFn(){
+                                console.log('second');
+                            }
+                        })
+                    }
+                })
             },
             closeNotification(){
                 this.show = false;
@@ -79,7 +90,6 @@
         },
         mounted(){
             this.$store.dispatch('hideNav');
-            console.log(this.$store.getters.getNavState);
         }
     }
 </script>

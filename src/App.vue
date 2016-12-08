@@ -29,7 +29,7 @@ export default {
         // Bus.$on('hideNav',this.hideNav);
         // Bus.$on('showNav',this.showNav);
         this.$store.dispatch('showNav');
-        console.log(this.$store.state.nav.navState)
+        // console.log(this.$store.state.nav.navState)
     }
 }
 </script>

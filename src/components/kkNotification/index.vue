@@ -2,19 +2,24 @@
 <template>
     <transition name="notification-ani">
         <div class="popup-wrap" v-if="show">
-            <transition name="fade" @enter="enter" appear>
-                <div class="popup-shade" @click="shadeCloseNotification"></div>
+            <transition name="fade" appear>
+                <div class="popup-shade"></div>
             </transition>
             <div class="popup-contain">
                 <transition name="scale" appear>
                     <div class="popup-dialog">
                         <div class="popup-content">
-                            <slot name="header"></slot>
-                            <div class="content-default">
-                                <slot name="content" class="content"></slot>
+                            <div class="header-default" v-if="title" :class="{'header-no-empty': title ? true : false}">
+                                <!-- <slot name="header">{title}</slot> -->
+                                {{title}}
                             </div>
-                            <div class="footer-default">
-                                <slot name="footer"></slot>
+                            <div class="content-default">
+                                {{msg}}
+                            </div>
+                            <div class="footer-default" :class="{ 'btn-line' : okButtonShow && cancelButtonShow ? true : false}">
+                                <!-- <slot name="footer"></slot> -->
+                                <button type="button" name="okbtn" class="btn ok-btn" :style="okButtonShow ? 'display:block' : 'display:none'" @click="submitAction('ok')">{{okButtonText}}</button>
+                                <button type="button" name="cancelbtn" class="btn cancel-btn"  :style="cancelButtonShow ? 'display:block' : 'display:none'" @click="submitAction('cancel')">{{cancelButtonText}}</button>
                             </div>
                         </div>
                     </div>
@@ -25,39 +30,21 @@
 </template>
 <script>
     export default{
-        name:'kkNotification',
-        props:{
-            notifyType:{
-                type: String,
-                default: 'alert'
-            },
-            show: {
-                type: Boolean,
-                default: false
-            },
-            shadeClose:{
-                type:Boolean,
-                default: false,
-            },
-            timeout:{
-                type:Number,
-                default:0
+        name:'Notify',
+        data(){
+            return {
+                show:false
             }
         },
         methods:{
-            shadeCloseNotification(){
-                if(this.shadeClose){
-                    this.$emit('closeNotification');
-                    // this.$store.commit('CLOSE_KKALERT');
+            submitAction(action){
+                this.show =false;
+                if(action === 'ok'){
+                    this.okFn ? this.okFn() : '';
                 }
-            },
-            enter(){
-                // 定时关闭弹层
-                if(this.timeout != 0){
-                    setTimeout(()=>{
-                        this.closeNotification();
-                        // this.$store.commit('CLOSE_KKALERT');
-                    }, this.timeout);
+                if(action === 'cancel'){
+                    this.cancelFn ? this.cancelFn() : '';
+
                 }
             }
         }
