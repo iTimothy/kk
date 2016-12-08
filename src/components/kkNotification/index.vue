@@ -33,19 +33,29 @@
         name:'Notify',
         data(){
             return {
-                show:false
+                title: '',
+                msg: '',
+                type: '',
+                shadeClose: false,
+                okButtonText: 'ok',
+                cancelButtonText: 'cancel',
+                okButtonShow: false,
+                cancelButtonShow: false,
+                callback: null,
+                show: false,
+                okFn: null,
+                cancelFn: null
             }
         },
         methods:{
             submitAction(action){
-                this.show =false;
                 if(action === 'ok'){
-                    this.okFn ? this.okFn() : '';
+                    this.okFn ? this.okFn() : ''
                 }
                 if(action === 'cancel'){
-                    this.cancelFn ? this.cancelFn() : '';
-
+                    this.cancelFn ? this.cancelFn() : ''
                 }
+                this.defaultCallBack()
             }
         }
     }

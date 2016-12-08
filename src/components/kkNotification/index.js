@@ -77,11 +77,11 @@ Notify.alert = (msg,title) => {
     if(typeof title === 'string'){
         options.title = title
     }
-    return Notify(merge(defaultOptions,options))
+    return Notify(merge(Notify.getDefaultOptions(),options))
 }
 
 Notify.toast = (msg) => {
-    let config = merge(defaultOptions,{
+    let config = merge(Notify.getDefaultOptions(),{
         msg: msg,
         type: 'toast',
         okButtonShow: false,
@@ -108,24 +108,14 @@ Notify.comfirm = (msg,title,options) => {
     }
     return Notify(merge(defaultOptions,_options))
 }
-Notify.resetOptions = ()=>{
-    let _defaultOption = {
-        title: '',
-        msg: '',
-        type: '',
-        shadeClose: false,
-        okButtonText: 'ok',
-        cancelButtonText: 'cancel',
-        okButtonShow: false,
-        cancelButtonShow: false,
-        callback: null,
-        show: false,
-        okFn: null,
-        cancelFn: null
-    }
 
-    merge(instance,_defaultOption)
-    console.log(instance.okButtonText)
+Notify.getDefaultOptions = ()=>{
+    let copyDefaultOptions = Object.assign({},defaultOptions)
+    return copyDefaultOptions;
+}
+
+Notify.close = ()=>{
+    instance.show = false
 }
 
 export default Notify
