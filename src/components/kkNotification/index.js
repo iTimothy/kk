@@ -13,7 +13,8 @@ let defaultOptions = {
     callback: null,
     show: false,
     okFn: null,
-    cancelFn: null
+    cancelFn: null,
+    duration: 0
 }
 
 var merge = function(target) {
@@ -53,6 +54,17 @@ let showModal = options => {
     merge(instance,defaultOptions,options)
 	Vue.nextTick(_ => {
         instance.show = true
+        if(instance.type === 'toast'){
+            if(instance.duration !=0 ){
+                setTimeout(()=>{
+                    defaultCallBack();
+                },instance.duration)
+            }else{
+                setTimeout(()=>{
+                    defaultCallBack();
+                },1800)
+            }
+        }
 	})
 }
 
@@ -80,33 +92,55 @@ Notify.alert = (msg,title) => {
     return Notify(merge(Notify.getDefaultOptions(),options))
 }
 
-Notify.toast = (msg) => {
-    let config = merge(Notify.getDefaultOptions(),{
-        msg: msg,
+Notify.toast = (msg,...argvs) => {
+
+    let option = {
         type: 'toast',
         okButtonShow: false,
         cancelButtonShow: false,
-    })
-    return Notify(config);
+    }
+
+    if(typeof msg === 'string'){
+        option.msg = msg
+    }
+    if(typeof msg === 'object'){
+        option = merge(option,msg)
+    }
+    if(typeof argvs[0] === 'number'){
+        option.duration = argvs[0]
+    }
+    option = merge(Notify.getDefaultOptions(),option)
+    return Notify(option)
 }
 
-Notify.comfirm = (msg,title,options) => {
+Notify.comfirm = (msg,...argvs) => {
     let _options = {
-        msg: msg,
         type: 'comfirm',
         okButtonShow: true,
         cancelButtonShow: true
     }
-    if(typeof title === 'object'){
+    if(typeof msg === 'string'){
+        _options.msg = msg
+    }
+    if(typeof msg === 'object'){
+        _options = merge(_options,msg)
+    }
+    if(typeof argvs[0] === 'function'){
+        _options.okFn = argvs[0]
+    }
+    if(typeof argvs[0] === 'object'){
         _options = merge(_options,title)
     }
-    if(typeof title === 'string'){
+    if(typeof argvs[0] === 'string'){
         _options.title = title
     }
-    if(typeof options !== 'object'){
+    if(typeof argvs[1] === 'object'){
         _options = merge(_options,options)
     }
-    return Notify(merge(defaultOptions,_options))
+    if(typeof argvs[1] === 'function'){
+        _options.cancelFn = argvs[1]
+    }
+    return Notify(merge(Notify.getDefaultOptions(),_options))
 }
 
 Notify.getDefaultOptions = ()=>{
@@ -119,4 +153,3 @@ Notify.close = ()=>{
 }
 
 export default Notify
-export { Notify }

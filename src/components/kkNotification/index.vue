@@ -3,7 +3,7 @@
     <transition name="notification-ani">
         <div class="popup-wrap" v-if="show">
             <transition name="fade" appear>
-                <div class="popup-shade"></div>
+                <div class="popup-shade" @click="submitAction('shade')"></div>
             </transition>
             <div class="popup-contain">
                 <transition name="scale" appear>
@@ -44,18 +44,23 @@
                 callback: null,
                 show: false,
                 okFn: null,
-                cancelFn: null
+                cancelFn: null,
+                duration: 0
             }
         },
         methods:{
             submitAction(action){
                 if(action === 'ok'){
                     this.okFn ? this.okFn() : ''
+                    this.defaultCallBack()
                 }
                 if(action === 'cancel'){
                     this.cancelFn ? this.cancelFn() : ''
+                    this.defaultCallBack()
                 }
-                this.defaultCallBack()
+                if(this.shadeClose === true && action === 'shade'){
+                    this.defaultCallBack()
+                }
             }
         }
     }

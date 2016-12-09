@@ -51,18 +51,19 @@
                 // this.$store.commit('OPEN_KKALERT');
                 // this.show = this.$store.getters.getKkAlertState;
                 // console.log(this.$store.state.kkAlert.kkAlertState);
-                Notify.alert({
-                    msg:'hhhh',
-                    okButtonText:'确定',
-                    okFn:function(){
-                        Notify.alert({
-                            msg:'fff',
-                            okFn(){
-                                console.log('second');
-                            }
-                        })
-                    }
-                })
+                // Notify.alert({
+                //     msg:'hhhh',
+                //     okButtonText:'确定',
+                //     okFn:function(){
+                //         Notify.alert({
+                //             msg:'fff',
+                //             okFn(){
+                //                 console.log('second');
+                //             }
+                //         })
+                //     }
+                // })
+                Notify.toast('dddd')
             },
             closeNotification(){
                 this.show = false;
