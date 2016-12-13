@@ -11,14 +11,14 @@ import Nofound from '../views/NoFound'
 Vue.use(VueRouter);
 
 const routes = [
-    {path:'/',redirect:'/index'},
-    {path:'/index',component:Home},
-    {path:'/activities/kkzc/index.html',redirect:'/index'},
-    {path:'/car/:carId',component:CarDetail},
-    {path:'/search',component:Search},
-    {path:'/my',component:My},
-    {path:'/order',component:Order},
-    {path:'*',component:Nofound}
+    {name:'redirect',path:'/',redirect:'/index'},
+    {name:'home',path:'/index',component:Home},
+    {name:'index',path:'/activities/kkzc/index.html',redirect:'/index'},
+    {name:'carDetail',path:'/car/:carId',component:CarDetail},
+    {name:'search',path:'/search',component:Search},
+    {name:'my',path:'/my',component:My},
+    {name:'order',path:'/order',component:Order},
+    {name:'noFound',path:'*',component:Nofound}
 ];
 
 export default new VueRouter({

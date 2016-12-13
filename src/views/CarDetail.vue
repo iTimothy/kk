@@ -5,7 +5,7 @@
 <template>
     <transition name="page-show" keep-alive>
         <div id="carDetail">
-            <kk-loading :showLoading="false" type="full" oneLine="no"/>
+            <!-- <kk-loading :showLoading="false" type="full" oneLine="no"/> -->
             <back :showBackNav="true" :backNavTitle="backNavTitle" :backNavFix="true"/>
             <!-- <kk-notification :show="show" @closeNotification="closeNotification" :shadeClose="true" notifyType="alert">
                 <p slot="header">header</p>
@@ -25,7 +25,7 @@
     // import Bus from '../bus.js';
     import kkNotification from '../components/kkNotification/index.vue';
     import Back from '../components/back';
-    import kkLoading from '../components/kkLoading/index';
+    import kkLoading from '../components/kkLoading/index.js';
     import { Swipe, SwipeItem } from 'vue-swipe';
     import Notify from '../components/kkNotification/index';
 
@@ -35,8 +35,7 @@
             kkNotification,
             Swipe,
             SwipeItem,
-            Back,
-            kkLoading
+            Back
         },
         data(){
             return{
@@ -63,7 +62,14 @@
                 //         })
                 //     }
                 // })
-                Notify.toast('dddd')
+                // Notify.toast('dddd')
+                kkLoading.show({
+                    type:'inject',
+                    oneLine:'yes'
+                })
+                setTimeout(_=>{
+                    kkLoading.close()
+                },3000)
             },
             closeNotification(){
                 this.show = false;
@@ -87,7 +93,6 @@
         },
         created(){
             this.getCarImg();
-
         },
         mounted(){
             this.$store.dispatch('hideNav');

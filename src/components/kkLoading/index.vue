@@ -16,23 +16,12 @@
 
 <script>
 export default {
-    name:'kkLoading',
-    props:{
-        type:{
-            default:'full',
-            type:String
-        },
-        showLoading:{
-            default:false,
-            type:Boolean
-        },
-        loadingStr:{
-            default:'..正在加载..',
-            type:String
-        },
-        oneLine:{
-            default:'no',
-            type:String
+    data(){
+        return {
+            type: 'full',
+            showLoading: false,
+            loadingStr: '..正在加载..',
+            oneLine: 'no'
         }
     }
 }

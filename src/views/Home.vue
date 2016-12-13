@@ -1,17 +1,15 @@
 <template>
     <transition name="page-hide" keep-alive>
         <div>
-            <kk-loading :showLoading="showLoading"/>
             <swipe class="my-swipe">
                 <swipe-item class="slide-item" v-for="item in adverImgList"  @click="adverFn(item.externalUrl)"><img :src="item.url" alt=""></swipe-item>
             </swipe>
-            <car-item :list-data="list" /></car-item>
+            <car-item :list-data="list"/></car-item>
         </div>
     </transition>
 </template>
 <script>
     import carItem from '../components/item';
-    import kkLoading from '../components/kkLoading/index';
     import { Swipe, SwipeItem } from 'vue-swipe';
     export default {
         name:'Home',
@@ -19,7 +17,6 @@
             carItem,
             Swipe,
             SwipeItem,
-            kkLoading
         },
         data(){
             return{
@@ -28,8 +25,7 @@
                 scrollLock:false,
                 page:1,
                 pageSize:10,
-                advertImgList:[],
-                showLoading:true
+                advertImgList:[]
             };
         },
         methods:{
@@ -87,23 +83,31 @@
         },
         mounted(){
             this.getCarList(()=>{
-                this.showLoading = false;
             });
             this.getAdvert();
-            //this.$store.commit('INCREMENT_COUNT');
-            this.$store.dispatch('INCREMENT_COUNT');
-            console.log(this.$store.state.count);
-            console.log(JSON.stringify(this.$store.getters.doneTodo[0]));
         },
         created(){
             window.addEventListener("scroll", this.scroll, false);
             this.$store.dispatch('showNav');
         },
         beforeRouteEnter(to,from,next){
-            next(vm=>{
+            next((vm)=>{
+                if(from.name === 'carDetail'){
+                    vm.list = JSON.parse(window.sessionStorage.getItem('list'))
+                    vm.page = window.sessionStorage.getItem('page')
+                    setTimeout(()=>{
+                        document.body.scrollTop = window.sessionStorage.getItem('scrollY')
+                        window.scrollTop = window.sessionStorage.getItem('scrollY')
+                    },0)
+                }
             })
         },
         beforeRouteLeave(to,from,next){
+            if(to.name === 'carDetail'){
+                window.sessionStorage.setItem('list',JSON.stringify(this.list))
+                window.sessionStorage.setItem('page',this.page)
+                window.sessionStorage.setItem('scrollY',window.scrollY || window.pageYOffset)
+            }
             next();
         }
     }
