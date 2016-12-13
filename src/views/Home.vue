@@ -107,6 +107,7 @@
                 window.sessionStorage.setItem('list',JSON.stringify(this.list))
                 window.sessionStorage.setItem('page',this.page)
                 window.sessionStorage.setItem('scrollY',window.scrollY || window.pageYOffset)
+                window.removeEventListener('scroll',this.scroll,false)
             }
             next();
         }
